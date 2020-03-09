@@ -8,7 +8,7 @@ namespace Spotify.Client.Application.Extensions
     {
         public static IServiceCollection AddUseCases(this IServiceCollection services)
         {
-            services.AddScoped<IGetCurrentUsersSavedTracksUseCase, GetCurrentUsersSavedTracksUseCase>();
+            services.AddScoped<IListSavedTracksUseCase, ListSavedTracksUseCase>();
             return services;
         }
     }

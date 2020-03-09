@@ -1,15 +1,32 @@
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using Spotify.Client.Domain.Gateways.Library;
-using Spotify.Client.Domain.Models;
 
 namespace Spotify.Client.Infrastructure.Gateways.Library
 {
     internal class SpotifyLibraryApiGateway : ISpotifyLibraryApiGateway
     {
-        public Task<IEnumerable<ITrack>> GetCurrentUsersSavedTracksAsync(string limit, int offset)
+        private readonly ISpotifyAuthenticator _spotifyAuthenticator;
+        private readonly LibraryEventHandler _libraryEventHandler;
+
+        public SpotifyLibraryApiGateway(ISpotifyAuthenticator spotifyAuthenticator,
+                                        LibraryEventHandler libraryEventHandler)
         {
-            throw new System.NotImplementedException();
+            _libraryEventHandler = libraryEventHandler;
+            _spotifyAuthenticator = spotifyAuthenticator;
         }
+
+        public Task ListSavedTracksAsync(int limit, int offset) =>
+            _spotifyAuthenticator.AuthenticateAsync(api =>
+            {
+                try
+                {
+                    _libraryEventHandler.Invoke(api.GetSavedTracks(limit, offset));
+                }
+                catch (Exception ex)
+                {
+                    _libraryEventHandler.Error(ex);
+                }
+            });
     }
 }

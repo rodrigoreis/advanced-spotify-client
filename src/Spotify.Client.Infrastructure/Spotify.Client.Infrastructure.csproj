@@ -2,12 +2,19 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
-
+    
     <ItemGroup>
-      <Folder Include="Entities" />
+        <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="3.0.6" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.2" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.2" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+        <PackageReference Include="SpotifyAPI.Web" Version="5.1.0" />
+        <PackageReference Include="SpotifyAPI.Web.Auth" Version="5.1.0" />
     </ItemGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\Spotify.Client.Domain\Spotify.Client.Domain.csproj" />
     </ItemGroup>

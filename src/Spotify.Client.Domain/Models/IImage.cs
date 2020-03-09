@@ -4,6 +4,6 @@ namespace Spotify.Client.Domain.Models
     {
         int Height { get; }
         string Url { get; }
-        string Width { get; }
+        int Width { get; }
     }
 }

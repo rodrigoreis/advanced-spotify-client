@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify.Client.Domain", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify.Client.Infrastructure", "src\Spotify.Client.Infrastructure\Spotify.Client.Infrastructure.csproj", "{B442BC38-9037-4474-BC33-478B452DB870}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify.Client.Presentation", "src\Spotify.Client.Presentation\Spotify.Client.Presentation.csproj", "{A73FC582-C0D9-4B81-98FB-7A4E5607AD1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify.Client.Ui", "src\Spotify.Client.Ui\Spotify.Client.Ui.csproj", "{A73FC582-C0D9-4B81-98FB-7A4E5607AD1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
