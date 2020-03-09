@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Spotify.Client.Domain.Gateways.Library;
+using Spotify.Client.Domain.Models;
 
 namespace Spotify.Client.Domain.Services
 {
@@ -13,7 +14,7 @@ namespace Spotify.Client.Domain.Services
             _spotifyLibraryApiGateway = spotifyLibraryApiGateway;
         }
 
-        public Task ListSavedTracksAsync(int limit, int offset)
+        public Task<ITrack[]> ListSavedTracksAsync(int limit, int offset)
         {
             if (limit < 1 || limit > 50)
                 throw new InvalidOperationException(

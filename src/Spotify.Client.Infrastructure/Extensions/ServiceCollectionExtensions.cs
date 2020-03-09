@@ -4,8 +4,10 @@ using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Spotify.Client.Domain.Gateways.Authorization;
 using Spotify.Client.Domain.Gateways.Library;
 using Spotify.Client.Infrastructure.Gateways;
+using Spotify.Client.Infrastructure.Gateways.Authorization;
 using Spotify.Client.Infrastructure.Gateways.Library;
 
 namespace Spotify.Client.Infrastructure.Extensions
@@ -24,7 +26,8 @@ namespace Spotify.Client.Infrastructure.Extensions
                             .Bind(options);
                     });
 
-            services.AddScoped<ISpotifyAuthenticator, SpotifyAuthenticator>();
+            services.AddSingleton<TokenHandler>();
+            services.AddSingleton<ITokenHandler, TokenHandler>(provider => provider.GetRequiredService<TokenHandler>());
 
             return services;
         }
@@ -47,20 +50,12 @@ namespace Spotify.Client.Infrastructure.Extensions
             return services;
         }
 
-        private static IServiceCollection AddGatewayEvents(this IServiceCollection services)
-        {
-            services.AddScoped<LibraryEventHandler>();
-            services.AddScoped<ILibraryEventHandler, LibraryEventHandler>(provider =>
-                provider.GetRequiredService<LibraryEventHandler>());
-
-            return services;
-        }
-
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddTypeMapping();
-            services.AddGatewayEvents();
+            services.AddScoped<IAuthorizationApiGateway, AuthorizationApiGateway>();
             services.AddScoped<ISpotifyLibraryApiGateway, SpotifyLibraryApiGateway>();
+
             return services;
         }
     }

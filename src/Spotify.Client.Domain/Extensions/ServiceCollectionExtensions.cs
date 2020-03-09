@@ -8,6 +8,7 @@ namespace Spotify.Client.Domain.Extensions
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
             services.AddScoped<ILibraryService, LibraryService>();
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
             return services;
         }
     }

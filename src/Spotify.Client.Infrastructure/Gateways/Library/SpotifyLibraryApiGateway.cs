@@ -1,32 +1,32 @@
-using System;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Spotify.Client.Domain.Gateways.Library;
+using Spotify.Client.Domain.Models;
+using SpotifyAPI.Web;
 
 namespace Spotify.Client.Infrastructure.Gateways.Library
 {
     internal class SpotifyLibraryApiGateway : ISpotifyLibraryApiGateway
     {
-        private readonly ISpotifyAuthenticator _spotifyAuthenticator;
-        private readonly LibraryEventHandler _libraryEventHandler;
+        private readonly ITokenHandler _tokenHandler;
+        private readonly IMapper _mapper;
 
-        public SpotifyLibraryApiGateway(ISpotifyAuthenticator spotifyAuthenticator,
-                                        LibraryEventHandler libraryEventHandler)
+        public SpotifyLibraryApiGateway(ITokenHandler tokenHandler, IMapper mapper)
         {
-            _libraryEventHandler = libraryEventHandler;
-            _spotifyAuthenticator = spotifyAuthenticator;
+            _tokenHandler = tokenHandler;
+            _mapper = mapper;
         }
 
-        public Task ListSavedTracksAsync(int limit, int offset) =>
-            _spotifyAuthenticator.AuthenticateAsync(api =>
+        public Task<ITrack[]> ListSavedTracksAsync(int limit, int offset)
+        {
+            var api = new SpotifyWebAPI
             {
-                try
-                {
-                    _libraryEventHandler.Invoke(api.GetSavedTracks(limit, offset));
-                }
-                catch (Exception ex)
-                {
-                    _libraryEventHandler.Error(ex);
-                }
-            });
+                TokenType = _tokenHandler.Token.TokenType,
+                AccessToken = _tokenHandler.Token.AccessToken
+            };
+            var result = api.GetSavedTracks(limit, offset);
+            return Task.FromResult(_mapper.Map<ITrack[]>(result).ToArray());
+        }
     }
 }
