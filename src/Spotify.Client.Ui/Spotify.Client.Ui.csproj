@@ -2,9 +2,10 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UserSecretsId>52f21fae-a769-42c1-94ef-6b9f0b56453e</UserSecretsId>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\Spotify.Client.Application\Spotify.Client.Application.csproj" />
       <ProjectReference Include="..\Spotify.Client.Infrastructure\Spotify.Client.Infrastructure.csproj" />
